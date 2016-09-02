@@ -1,0 +1,11 @@
+vf=ass,screenshot
+ass=yes
+heartbeat-cmd="xscreensaver-command -deactivate >&- 2>&- &"
+msgcolor=yes
+lirc=no
+
+[tv]
+xineramascreen=2
+geometry=2:2
+fs=yes
+vf=scale=1920:-3,ass,screenshot
