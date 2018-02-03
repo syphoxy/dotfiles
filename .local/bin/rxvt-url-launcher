@@ -1,0 +1,16 @@
+#!/bin/bash
+
+readonly TWITCH_REGEX='twitch.tv/[A-Za-z0-9_]+'
+
+if grep -qE "$TWITCH_REGEX" <<< "$1"; then
+  readonly NOTIFY_SEND_SUMMARY="Twitch URL Handler"
+
+  notify-send "$NOTIFY_SEND_SUMMARY" \
+    "starting stream: $1"
+
+  streamlink "$(grep -oE "$TWITCH_REGEX" <<< "$1")" best \
+    || notify-send "$NOTIFY_SEND_SUMMARY" \
+      "failed to start stream: $1.\nis the streamer offline?"
+else
+  xdg-open "$1"
+fi

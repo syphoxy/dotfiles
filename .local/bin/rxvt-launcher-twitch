@@ -1,3 +1,0 @@
-#!/bin/bash
-
-streamlink $1 best
