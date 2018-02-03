@@ -24,6 +24,8 @@
 #define tangoWhite      #D3D7CF
 #define tangoWhiteBold  #EEEEEC
 
+!!! Nord color scheme: https://github.com/arcticicestudio/nord-xresources
+
 !!! fonts
 #define regularFont xft:Monospace:size=9:Regular:antialias=true,xft:Kochi Gothic:size=9:Regular:antialias=true 
 #define boldFont    xft:Monospace:size=9:Bold:antialias=true,xft:Kochi Gothic:size=9:Bold:antialias=true
