@@ -1,0 +1,114 @@
+!!! tango color scheme
+! black
+#define tangoBlack      #2E3436
+#define tangoBlackBold  #6E706B
+! red
+#define tangoRed        #CC0000
+#define tangoRedBold    #EF2929
+! green
+#define tangoGreen      #4E9A06
+#define tangoGreenBold  #8AE234
+! yellow
+#define tangoYellow     #EDD400
+#define tangoYellowBold #FCE94F
+! blue
+#define tangoBlue       #3465A4
+#define tangoBlueBold   #729FCF
+! purple
+#define tangoPurple     #92659A
+#define tangoPurpleBold #C19FBE
+! cyan
+#define tangoCyan       #07C7CA
+#define tangoCyanBold   #63E9E9
+! white
+#define tangoWhite      #D3D7CF
+#define tangoWhiteBold  #EEEEEC
+
+!!! fonts
+#define regularFont xft:Monospace:size=9:Regular:antialias=true,xft:Kochi Gothic:size=9:Regular:antialias=true 
+#define boldFont    xft:Monospace:size=9:Bold:antialias=true,xft:Kochi Gothic:size=9:Bold:antialias=true
+
+!!! Xft config
+Xft.autohint: 0
+Xft.antialias: 1
+Xft.hinting: 1
+Xft.hintstyle: hintmedium
+Xft.lcdfilter: lcddefault
+Xft.rgba: rgb
+
+!!! XTerm/URxvt config
+*.internalBorder: 3
+*.inputMethod: ibus
+*.preeditType: OverTheSpot
+*.saveLines: 32767
+*.scrollTtyOutput: false
+*.cursorBlink: true
+*.boldMode: true
+*.loginShell: true
+! fonts
+*.font: regularFont
+*.faceName: regularFont
+*.boldFont: boldFont
+
+!!! color config
+*.background: tangoBlack
+*.foreground: tangoWhite
+*.cursorColor: tangoGreen
+! black
+*.color0: tangoBlack
+*.color8: tangoBlackBold
+! red
+*.color1: tangoRed
+*.color9: tangoRedBold
+! green
+*.color2: tangoGreen
+*.color10: tangoGreenBold
+! yellow
+*.color3: tangoYellow
+*.color11: tangoYellowBold
+! blue
+*.color4: tangoBlue
+*.color12: tangoBlueBold
+! purple
+*.color5: tangoPurple
+*.color13: tangoPurpleBold
+! cyan
+*.color6: tangoCyan
+*.color14: tangoCyanBold
+! white
+*.color7: tangoWhite
+*.color15: tangoWhiteBold
+
+!!! XTerm config
+XTerm.vt100.scrollBar: false
+
+!!! URxvt settings
+URxvt.scrollBar: false
+URxvt.letterSpace: 0
+URxvt.iso14755: false
+URxvt.iso14755_52: false
+URxvt.print-pipe: cat > /dev/null
+URxvt.scrollTtyKeypress: true
+URxvt.scrollWithBuffer: false
+URxvt.cursorUnderline: true
+URxvt.urgentOnBell: true
+URxvt.intensityStyles: true
+URxvt.skipBuiltinGlyphs: true
+URxvt.pointerBlank: true
+!!! colors/background
+URxvt.fading: 35
+URxvt.fadeColor: tangoBlack
+URxvt.transparent: true
+URxvt.shading: 15
+!!! URxvt plugins
+URxvt.perl-ext-common: default,matcher
+!!! URxvt matcher plugin
+URxvt.matcher.button: 1
+URxvt.matcher.launcher.0: xdg-open
+URxvt.matcher.rend.0: fg:16 bg:2 Bold
+URxvt.matcher.launcher.1: rxvt-launcher-twitch
+URxvt.matcher.pattern.1: twitch.tv/\\S+
+URxvt.matcher.rend.1: fg:17 bg:3 Bold
+!!! URxvt keybinds
+URxvt.keysym.C-Delete: perl:matcher:last
+URxvt.keysym.M-Delete: perl:matcher:select
