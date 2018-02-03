@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+for x in "$@"; do
+  dest="$(exiftool -d '%m-%d' -S -CreateDate "$x" | awk '{ print $2 }')"  
+  test -d "$dest" || mkdir "$dest"
+  mv -v "$x" "$dest"
+done
