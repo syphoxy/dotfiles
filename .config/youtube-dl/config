@@ -1,0 +1,3 @@
+--exec 'mpv {}'
+-f best
+-o '~/Videos/YouTube/%(title)s (%(uploader)s) {%(id)s}.%(ext)s'
