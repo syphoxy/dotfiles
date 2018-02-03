@@ -1,0 +1,1 @@
+player=mpv --no-keepaspect-window --x11-name livestreamer
