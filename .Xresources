@@ -98,12 +98,12 @@ URxvt.intensityStyles: true
 URxvt.skipBuiltinGlyphs: true
 URxvt.pointerBlank: true
 !!! colors/background
-URxvt.fading: 35
+URxvt.fading: 25
 URxvt.fadeColor: tangoBlack
 URxvt.transparent: true
 URxvt.shading: 15
 !!! URxvt plugins
-URxvt.perl-ext-common: default,matcher
+URxvt.perl-ext-common: default,matcher,font-size
 !!! URxvt matcher plugin
 URxvt.matcher.button: M-1
 URxvt.matcher.launcher.0: rxvt-url-launcher
