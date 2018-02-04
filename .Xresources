@@ -114,3 +114,5 @@ URxvt.matcher.rend.1: fg:16 bg:2 Bold
 !!! URxvt keybinds
 URxvt.keysym.C-Delete: perl:matcher:last
 URxvt.keysym.M-Delete: perl:matcher:select
+
+!!! font-size extension: https://github.com/majutsushi/urxvt-font-size
