@@ -1,8 +1,41 @@
-#!/bin/bash
+#!/usr/bin/env zsh
 
+readonly WEBM_REGEX='\.webm$'
+readonly GFYCAT_REGEX='gfycat\.com/[a-zA-Z]+'
+readonly IMAGE_REGEX='\.(jpg|png|gif|tiff|cr2)$'
 readonly TWITCH_REGEX='twitch.tv/[A-Za-z0-9_]+'
+readonly YOUTUBE_REGEX='youtube\.com|youtu\.be'
 
-if grep -qE "$TWITCH_REGEX" <<< "$1"; then
+if grep -qE "$GFYCAT_REGEX" <<< "$1"; then
+  readonly NOTIFY_SEND_SUMMARY="Gfycat URL Handler"
+
+  notify-send "$NOTIFY_SEND_SUMMARY" "Playing $1"
+
+  curl -s "$(
+    grep -oE "$GFYCAT_REGEX" <<< "$1" \
+    | sed 's#gfycat\.com#https://&/cajax/get#'
+  )" \
+  | jq -r .gfyItem.webmUrl \
+  | xargs -d'\n' -n1 mpv --loop=inf
+
+  test $? -ne 0 \
+    && notify-send "$NOTIFY_SEND_SUMMARY" \
+      "Failed to play $1"
+elif grep -qE "$WEBM_REGEX" <<< "$1"; then
+  mpv --loop=inf "$1"
+elif grep -qE "$YOUTUBE_REGEX" <<< "$1"; then
+  readonly NOTIFY_SEND_SUMMARY="YouTube URL Handler"
+
+  notify-send "$NOTIFY_SEND_SUMMARY" "Playing $1"
+
+  mpv "$1"
+
+  test $? -ne 0 \
+    && notify-send "$NOTIFY_SEND_SUMMARY" \
+      "Failed to play $1"
+elif grep -qE "$IMAGE_REGEX" <<< "$1"; then
+  sxiv -a =(curl -s "$1")
+elif grep -qE "$TWITCH_REGEX" <<< "$1"; then
   readonly NOTIFY_SEND_SUMMARY="Twitch URL Handler"
 
   notify-send "$NOTIFY_SEND_SUMMARY" \
