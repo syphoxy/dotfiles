@@ -1,86 +1,95 @@
-" Required for Vundle
 set nocompatible
 filetype off
 
-" Set runtime path and initialize Vundle
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
-" let Vundle manage itself
-Plugin 'gmarik/Vundle.vim'
-
-" Source control
+Plugin 'Glench/Vim-Jinja2-Syntax'
 Plugin 'airblade/vim-gitgutter'
-
-" Show trailing whitespace
 Plugin 'bronson/vim-trailing-whitespace'
-
-" Laravel/Blade
+Plugin 'chase/vim-ansible-yaml'
+Plugin 'derekwyatt/vim-scala'
+Plugin 'ekalinin/Dockerfile.vim'
+Plugin 'fatih/vim-go'
+Plugin 'gmarik/Vundle.vim'
+Plugin 'hashivim/vim-terraform'
+Plugin 'itchyny/lightline.vim'
+Plugin 'jremmen/vim-ripgrep'
+Plugin 'nanotech/jellybeans.vim'
+Plugin 'rust-lang/rust.vim'
+Plugin 'tpope/vim-rails.git'
+Plugin 'vim-scripts/groovyindent-unix'
+Plugin 'vim-scripts/vim-auto-save'
+Plugin 'wlangstroth/vim-racket'
 Plugin 'xsbeats/vim-blade.git'
 
-" Rails
-Plugin 'tpope/vim-rails.git'
+" Plugin 'ap/vim-buftabline'
+" Plugin 'derekwyatt/vim-scala'
+" Plugin 'robbles/logstash.vim'
+" Plugin 'scrooloose/syntastic'
+" Plugin 'tpope/vim-rails.git'
+" Plugin 'vim-syntastic/syntastic'
+" Plugin 'wlangstroth/vim-racket'
+" Plugin 'xsbeats/vim-blade.git'
 
-" Scala
-Plugin 'derekwyatt/vim-scala'
-
-" Racket
-Plugin 'wlangstroth/vim-racket'
-
-" Syntax checking
-Plugin 'scrooloose/syntastic'
-Plugin 'chase/vim-ansible-yaml'
-Plugin 'robbles/logstash.vim'
-Plugin 'fatih/vim-go'
-Plugin 'Glench/Vim-Jinja2-Syntax'
-
-" Colors
-Plugin 'nanotech/jellybeans.vim'
-
-" Most Recently Used
-Plugin 'yegappan/mru'
-
-" All Plugins must be added before this
 call vundle#end()
 
-" jellybeans
+"" End of Vundle configuration
+
 let g:jellybeans_background_color_256='NONE'
+
+let g:gitgutter_sign_added = '+ '
+let g:gitgutter_sign_modified = 'M '
+let g:gitgutter_sign_modified_removed = 'M '
+let g:gitgutter_sign_removed = '- '
+let g:gitgutter_sign_removed_first_line = '- '
+
+if exists('&signcolumn')  " Vim 7.4.2201
+  set signcolumn=yes
+else
+  let g:gitgutter_sign_column_always = 1
+endif
+
+let g:terraform_align=1
+let g:terraform_fmt_on_save=1
+
+let g:go_fmt_command = "goimports"
+let g:go_highlight_build_constraints = 1
+let g:go_highlight_fields = 1
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_types = 1
+
+let g:rustfmt_autosave = 1
+
+colorscheme jellybeans
 
 syntax on
 filetype plugin indent on
 
-colorscheme jellybeans
-
-" vim-gitgutter
 highlight clear SignColumn
+highlight VertSplit ctermbg=NONE guibg=NONE
 
-let g:gitgutter_sign_added = '+ '
-let g:gitgutter_sign_modified = 'M '
-let g:gitgutter_sign_removed = '- '
-let g:gitgutter_sign_removed_first_line = '- '
-let g:gitgutter_sign_modified_removed = 'M '
-let g:gitgutter_sign_column_always = 1
-
-" vim-go
-let g:go_highlight_functions = 1
-let g:go_highlight_methods = 1
-let g:go_highlight_structs = 1
-let g:go_highlight_operators = 1
-let g:go_highlight_build_constraints = 1
-
-set noswapfile
-set nobackup
-set number
-set nostartofline
-set nowrap
-set hidden
-set showcmd
-set laststatus=2
-
-set expandtab
-set tabstop=4
-set shiftwidth=4
 set autoindent
+set backspace=indent,eol,start
+set expandtab
+set fillchars+=vert:│
+set hidden
+set hlsearch
+set laststatus=2
+set nobackup
+set nostartofline
+set noswapfile
+set nowrap
+set number
+set scrolloff=10
+set shiftwidth=2
+set showcmd
+set tabstop=2
+
+autocmd BufNewFile,BufReadPost Fastfile     set filetype=ruby
+autocmd BufNewFile,BufReadPost Jenkinsfile* set filetype=groovy
 
 noremap  <F1> :bp<CR>
 noremap  <F2> :bn<CR>
