@@ -5,8 +5,10 @@ readonly GFYCAT_REGEX='gfycat\.com/[a-zA-Z]+'
 readonly IMAGE_REGEX='\.(jpg|png|gif|tiff|cr2)$'
 readonly TWITCH_REGEX='twitch.tv/[A-Za-z0-9_]+'
 readonly YOUTUBE_REGEX='youtube\.com|youtu\.be'
+readonly GIPHY_REGEX='giphy.com/gifs/[a-zA-Z0-9-]+'
+readonly TEXT_REGEX='(hastebin\.com/raw/[a-z]+|\.txt)$'
 
-if grep -qE "$GFYCAT_REGEX" <<< "$1"; then
+if grep -qiE "$GFYCAT_REGEX" <<< "$1"; then
   readonly NOTIFY_SEND_SUMMARY="Gfycat URL Handler"
 
   notify-send "$NOTIFY_SEND_SUMMARY" "Playing $1"
@@ -22,10 +24,19 @@ if grep -qE "$GFYCAT_REGEX" <<< "$1"; then
     && notify-send "$NOTIFY_SEND_SUMMARY" \
       "Failed to play $1"
 
-elif grep -qE "$WEBM_REGEX" <<< "$1"; then
+elif grep -qiE "$WEBM_REGEX" <<< "$1"; then
   mpv --loop=inf "$1"
 
-elif grep -qE "$YOUTUBE_REGEX" <<< "$1"; then
+elif grep -qiE "$GIPHY_REGEX" <<< "$1"; then
+  mpv --loop=inf "https://media.giphy.com/media/$(
+    grep -oE "$GIPHY_REGEX" <<< "$1" \
+    | cut -d/ -f3 \
+    | rev \
+    | cut -d- -f1 \
+    | rev
+  )/giphy.mp4"
+
+elif grep -qiE "$YOUTUBE_REGEX" <<< "$1"; then
   readonly NOTIFY_SEND_SUMMARY="YouTube URL Handler"
 
   notify-send "$NOTIFY_SEND_SUMMARY" "Playing $1"
@@ -36,10 +47,13 @@ elif grep -qE "$YOUTUBE_REGEX" <<< "$1"; then
     && notify-send "$NOTIFY_SEND_SUMMARY" \
       "Failed to play $1"
 
-elif grep -qE "$IMAGE_REGEX" <<< "$1"; then
+elif grep -qiE "$TEXT_REGEX" <<< "$1"; then
+  env MATCHED_URL="$1" urxvt256c-ml -e bash -c 'curl -s "$MATCHED_URL" | less'
+
+elif grep -qiE "$IMAGE_REGEX" <<< "$1"; then
   sxiv -a =(curl -s "$1")
 
-elif grep -qE "$TWITCH_REGEX" <<< "$1"; then
+elif grep -qiE "$TWITCH_REGEX" <<< "$1"; then
   readonly NOTIFY_SEND_SUMMARY="Twitch URL Handler"
 
   notify-send "$NOTIFY_SEND_SUMMARY" \
