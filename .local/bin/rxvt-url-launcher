@@ -7,7 +7,7 @@ readonly GFYCAT_REGEX='gfycat\.com/[a-zA-Z]+'
 readonly IMAGE_REGEX='\.(jpg|png|gif|tiff|cr2)$'
 readonly TWITCH_REGEX='twitch.tv/[A-Za-z0-9_]+'
 readonly YOUTUBE_REGEX='youtube\.com|youtu\.be'
-readonly GIPHY_REGEX='giphy.com/gifs/[a-zA-Z0-9-]+'
+readonly GIPHY_REGEX='giphy.com/(gifs|media)/[a-zA-Z0-9-]+'
 readonly TEXT_REGEX='(hastebin\.com/raw/[a-z]+|\.txt)$'
 
 if grep -qiE "$GFYCAT_REGEX" <<< "$1"; then
