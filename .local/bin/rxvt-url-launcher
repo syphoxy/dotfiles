@@ -8,6 +8,7 @@ readonly IMAGE_REGEX='\.(jpg|png|gif|tiff|cr2)$'
 readonly TWITCH_REGEX='twitch.tv/[A-Za-z0-9_]+'
 readonly YOUTUBE_REGEX='youtube\.com|youtu\.be'
 readonly GIPHY_REGEX='giphy.com/(gifs|media)/[a-zA-Z0-9-]+'
+readonly GITHUB_REGEX='github.com/[^/]+/[^/]+/blob/.+$'
 readonly TEXT_REGEX='(hastebin\.com/raw/[a-z]+|\.txt)$'
 
 if grep -qiE "$GFYCAT_REGEX" <<< "$1"; then
@@ -16,7 +17,7 @@ if grep -qiE "$GFYCAT_REGEX" <<< "$1"; then
   notify-send "$NOTIFY_SEND_SUMMARY" "Playing $1"
 
   curl -s "$(
-    grep -oE "$GFYCAT_REGEX" <<< "$1" \
+    grep -oiE "$GFYCAT_REGEX" <<< "$1" \
     | sed 's#gfycat\.com#https://&/cajax/get#'
   )" \
   | jq -r .gfyItem.webmUrl \
@@ -29,9 +30,13 @@ if grep -qiE "$GFYCAT_REGEX" <<< "$1"; then
 elif grep -qiE "$WEBM_REGEX" <<< "$1"; then
   mpv --loop=inf "$1"
 
+elif grep -qiE "$GITHUB_REGEX" <<< "$1"; then
+  env MATCHED_URL="$(grep -oiE "$GITHUB_REGEX" <<< "$1" | sed 's#github.com#https://raw.githubusercontent.com#' | cut -d/ -f1-5,7-)" \
+    "$TERMINAL" -e "$SHELL" -c 'curl -s "$MATCHED_URL" | vim -R -'
+
 elif grep -qiE "$GIPHY_REGEX" <<< "$1"; then
   mpv --loop=inf "https://media.giphy.com/media/$(
-    grep -oE "$GIPHY_REGEX" <<< "$1" \
+    grep -oiE "$GIPHY_REGEX" <<< "$1" \
     | cut -d/ -f3 \
     | rev \
     | cut -d- -f1 \
@@ -50,7 +55,8 @@ elif grep -qiE "$YOUTUBE_REGEX" <<< "$1"; then
       "Failed to play $1"
 
 elif grep -qiE "$TEXT_REGEX" <<< "$1"; then
-  env MATCHED_URL="$1" "$TERMINAL" -e "$SHELL" -c 'curl -s "$MATCHED_URL" | less'
+  env MATCHED_URL="$1" \
+    "$TERMINAL" -e "$SHELL" -c 'curl -s "$MATCHED_URL" | vim -R -'
 
 elif grep -qiE "$IMAGE_REGEX" <<< "$1"; then
   sxiv -a =(curl -s "$1")
@@ -61,7 +67,7 @@ elif grep -qiE "$TWITCH_REGEX" <<< "$1"; then
   notify-send "$NOTIFY_SEND_SUMMARY" \
     "starting stream: $1"
 
-  streamlink "$(grep -oE "$TWITCH_REGEX" <<< "$1")" best \
+  streamlink "$(grep -oiE "$TWITCH_REGEX" <<< "$1")" best \
     || notify-send "$NOTIFY_SEND_SUMMARY" \
       "failed to start stream: $1.\nis the streamer offline?"
 else
