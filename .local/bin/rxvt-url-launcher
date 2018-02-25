@@ -1,5 +1,7 @@
 #!/usr/bin/env zsh
 
+readonly TERMINAL=urxvt256c-ml
+
 readonly WEBM_REGEX='\.webm$'
 readonly GFYCAT_REGEX='gfycat\.com/[a-zA-Z]+'
 readonly IMAGE_REGEX='\.(jpg|png|gif|tiff|cr2)$'
@@ -48,7 +50,7 @@ elif grep -qiE "$YOUTUBE_REGEX" <<< "$1"; then
       "Failed to play $1"
 
 elif grep -qiE "$TEXT_REGEX" <<< "$1"; then
-  env MATCHED_URL="$1" urxvt256c-ml -e bash -c 'curl -s "$MATCHED_URL" | less'
+  env MATCHED_URL="$1" "$TERMINAL" -e "$SHELL" -c 'curl -s "$MATCHED_URL" | less'
 
 elif grep -qiE "$IMAGE_REGEX" <<< "$1"; then
   sxiv -a =(curl -s "$1")
